@@ -8,13 +8,13 @@ import { DiscordChatInputCommand } from '../types/DiscordChatInputCommand.js';
 export class ToggleBreadOnlyCommand extends DiscordChatInputCommand {
   constructor() {
     super({
-      name: 'togglebreadonly',
-      description: 'Toggle if the current channel should be a bread only channel.',
+      name: 'toggleturtleonly',
+      description: 'Toggle if the current channel should be a turtle only channel.',
       options: [
         {
           type: ApplicationCommandOptionType.Boolean,
           name: 'allow_custom_emojis',
-          description: 'If the custom bread emojis should be allowed in this channel. (Default: false)',
+          description: 'If the custom turtle emojis should be allowed in this channel. (Default: false)',
           required: false,
         },
       ],
@@ -31,7 +31,7 @@ export class ToggleBreadOnlyCommand extends DiscordChatInputCommand {
     }
     if (!commandInteraction.memberPermissions.has(PermissionFlagsBits.ManageGuild)) {
       return commandInteraction.reply({
-        content: 'You need to have manage server permissions to toggle the bread only channel state.',
+        content: 'You need to have manage server permissions to toggle the turtle only channel state.',
         flags: MessageFlags.Ephemeral,
       });
     }
@@ -52,7 +52,7 @@ export class ToggleBreadOnlyCommand extends DiscordChatInputCommand {
         },
       });
       return commandInteraction.reply({
-        content: 'The current channel is no longer a bread only channel.',
+        content: 'The current channel is no longer a turtle only channel.',
       });
     } else {
       let allowCustomEmojis = commandInteraction.options.getBoolean('allow_custom_emojis', false);
@@ -69,10 +69,10 @@ export class ToggleBreadOnlyCommand extends DiscordChatInputCommand {
         !commandInteraction.channel ||
         !commandInteraction.guild?.members?.me?.permissionsIn(currentChannelId).has(PermissionFlagsBits.ManageMessages)
       ) {
-        additionalMessage = `Please give ${commandInteraction.client.user?.username} the manage messages permission, without this permission, it cannot delete non-bread messages.`;
+        additionalMessage = `Please give ${commandInteraction.client.user?.username} the manage messages permission, without this permission, it cannot delete non-turtle messages.`;
       }
       return commandInteraction.reply({
-        content: [`The current channel is now a bread only channel.${allowCustomEmojis ? ' (With custom emojis)' : ''}`, additionalMessage]
+        content: [`The current channel is now a turtle only channel.${allowCustomEmojis ? ' (With custom emojis)' : ''}`, additionalMessage]
           .join('\n')
           .trim(),
       });
