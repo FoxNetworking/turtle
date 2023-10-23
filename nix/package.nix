@@ -5,7 +5,7 @@ buildNpmPackage.override { nodejs = nodejsPackage; } {
   version = "1.0.0";
 
   # We rely on Nix to manage our dependencies as specified.
-  npmDepsHash = "sha256-2kIJUjRder3B4WSGqJG/FjXJVlqZ0UQ//lN3LzdMJZY=";
+  npmDepsHash = "sha256-Hj/fwvdUxN7Ljb4BA7QqKZfF2AYaD9imVl8xi56Rmfc=";
   src = ../.;
 
   # We have to generate Prisma prior to building.
