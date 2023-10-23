@@ -16,18 +16,18 @@ export async function messageCreateListener(message: Message): Promise<void> {
     if (message.author.bot) {
       return attemptMessageDelete(message);
     }
-    // Delete if it is not the default bread emoji (if custom emojis aren't allowed)
-    if (!enabledChannel.allow_custom_emojis && message.content !== '🍞') {
+    // Delete if it is not the default turtle emoji (if custom emojis aren't allowed)
+    if (!enabledChannel.allow_custom_emojis && message.content !== '🐢') {
       return attemptMessageDelete(message);
     }
-    // Delete if it is not the default bread emoji or custom emojis (if custom emojis are allowed)
-    if (enabledChannel.allow_custom_emojis && !inputEqualsValidEmoji(message.content, ['🍞'])) {
+    // Delete if it is not the default turtle emoji or custom emojis (if custom emojis are allowed)
+    if (enabledChannel.allow_custom_emojis && !inputEqualsValidEmoji(message.content, ['🐢'])) {
       return attemptMessageDelete(message);
     }
   }
   if (message.author.bot) return; // Ignore bots
   // If the message contains a valid emoji (invalid messages have already been ignored)
-  if (inputContainsValidEmoji(message.content, ['🍞'])) {
+  if (inputContainsValidEmoji(message.content, ['🐢'])) {
     addToCounterQueue({
       guildId: message.guildId,
       channelId,

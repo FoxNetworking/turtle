@@ -14,7 +14,7 @@ export async function readyListener(clientObject: Client<true>): Promise<void> {
         {
           key: 'totalcount',
           name: 'Total Sent',
-          description: 'The total bread sent by the user.',
+          description: 'The total turtle sent by the user.',
           type: 2, // number_gt
         },
       ],
