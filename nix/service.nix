@@ -3,9 +3,9 @@
 let
   inherit (lib) mkEnableOption mkIf mkOption optionalString types;
   cfg = config.services.turtle;
-  
+
   # Used for global emoji configuration.
-  json = pkgs.formats.json {};
+  json = pkgs.formats.json { };
   globalEmojis = json.generate "globalEmojis.json" cfg.globalEmojis;
 in
 {
@@ -72,7 +72,7 @@ in
 
     globalEmojis = mkOption {
       type = types.listOf types.str;
-      default = [];
+      default = [ ];
       description = lib.mdDoc ''
         An array of global emoji to additionally recognize.
       '';
@@ -92,7 +92,25 @@ in
         RANDOM_SEED_PREFIX = cfg.randomSeedPrefix;
         WEB_SERVER_PORT = toString cfg.webServerPort;
         GLOBAL_EMOJIS_PATH = "${globalEmojis}";
+
+        # We need to specify exact paths to various binaries used by Prisma.
+        # This.. is not ideal! It's mirrored to the Nix package within `./nix/package.nix`.
+        #
+        # See also: https://github.com/prisma/prisma/issues/3026#issuecomment-927258138
+        # TODO: When Turtle is migrated to Prisma 5.x, rename to SCHEMA_ENGINE.
+        PRISMA_MIGRATION_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/schema-engine";
+        PRISMA_QUERY_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/query-engine";
+        PRISMA_QUERY_ENGINE_LIBRARY = "${pkgs.prisma-engines}/lib/libquery_engine.node";
       };
+
+      # Migrate as soon as possible.
+      # We have to reference the Prisma schema present within our distribution.
+      preStart = ''
+        export TURTLE_PATH="${self.packages.${pkgs.system}.turtle}";
+        export MIGRATIONS_PATH="$TURTLE_PATH/lib/node_modules/bread/prisma/schema.prisma";
+        ${pkgs.nodePackages.prisma}/bin/prisma migrate deploy --schema=$MIGRATIONS_PATH
+      '';
+
       wantedBy = [ "multi-user.target" ];
       # This is still turtle! We retain the original bot's executable name.
       serviceConfig.ExecStart = "${self.packages.${pkgs.system}.turtle}/bin/bread";

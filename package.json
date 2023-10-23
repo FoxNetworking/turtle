@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "prisma-generate": "prisma generate",
     "build": "tsc --project tsconfig.json",
     "lint": "eslint \"**/*.ts\" --max-warnings=0",
     "fix": "eslint \"**/*.ts\" --fix --max-warnings=0"
