@@ -72,7 +72,7 @@ export class StatsCommand extends DiscordChatInputCommand {
       const userChannelPosition = await getChannelLeaderboardPositionForUser(
         commandInteraction.guildId,
         currentChannelId,
-        specifiedUser.id
+        specifiedUser.id,
       );
       const userChannelCount = await getChannelCountForUser(commandInteraction.guildId, currentChannelId, specifiedUser.id);
       outputLines.push(`Channel : ${userChannelCount.toLocaleString('en-US') + formatPlace(userChannelPosition, userChannelCount)}`);

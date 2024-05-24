@@ -1,3 +1,4 @@
+import { RESTGetAPICurrentUserResult, RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v10';
 import { Request, Response } from 'express';
 import { client, prismaClient } from '../../index.js';
 import { refreshProfileMetadata } from '../../utils/DiscordUtils.js';
@@ -32,14 +33,14 @@ export async function authCallbackRoute(req: Request, res: Response) {
       error: 'INVALID_CODE',
     });
   }
-  const tokenResponseJson = await tokenResponse.json();
+  const tokenResponseJson = (await tokenResponse.json()) as RESTPostOAuth2AccessTokenResult;
   // Get the user id (since otherwise, we aren't sure what user it is)
   const usersMeResponse = await fetch('https://discord.com/api/users/@me', {
     headers: {
       authorization: `${tokenResponseJson.token_type} ${tokenResponseJson.access_token}`,
     },
   });
-  const usersMeResponseJson = await usersMeResponse.json();
+  const usersMeResponseJson = (await usersMeResponse.json()) as RESTGetAPICurrentUserResult;
   // Make sure the user is in the database before doing the oauth2 callback
   await new Promise<void>((resolve) => {
     userQueueItemProcess(
@@ -50,7 +51,7 @@ export async function authCallbackRoute(req: Request, res: Response) {
       },
       () => {
         resolve();
-      }
+      },
     );
   });
   // Store the token information in the database

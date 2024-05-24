@@ -40,7 +40,7 @@ export class PrivacyCommand extends DiscordChatInputCommand {
           username: commandInteraction.user.username,
           discriminator: commandInteraction.user.discriminator,
         },
-        resolve
+        resolve,
       );
     });
     const user = await getUser(BigInt(commandInteraction.user.id));

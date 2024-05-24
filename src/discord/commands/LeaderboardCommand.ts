@@ -90,7 +90,7 @@ async function formatUsersLeaderboard(
   requestUserId: bigint,
   options?: {
     hideOtherNames?: boolean;
-  }
+  },
 ): Promise<string[]> {
   const hideOtherNames = options?.hideOtherNames || false;
   const outputLines = [];
@@ -110,7 +110,7 @@ async function formatUsersLeaderboard(
         usersLeaderboard[i].count.toLocaleString('en-US') +
         ' - ' +
         displayName +
-        (requestUserId === usersLeaderboard[i].user_id ? ' (You)' : '')
+        (requestUserId === usersLeaderboard[i].user_id ? ' (You)' : ''),
     );
   }
   return outputLines;
