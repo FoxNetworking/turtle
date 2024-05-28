@@ -97,8 +97,7 @@ in
         # This.. is not ideal! It's mirrored to the Nix package within `./nix/package.nix`.
         #
         # See also: https://github.com/prisma/prisma/issues/3026#issuecomment-927258138
-        # TODO: When Turtle is migrated to Prisma 5.x, rename to SCHEMA_ENGINE.
-        PRISMA_MIGRATION_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/schema-engine";
+        PRISMA_SCHEMA_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/schema-engine";
         PRISMA_QUERY_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/query-engine";
         PRISMA_QUERY_ENGINE_LIBRARY = "${pkgs.prisma-engines}/lib/libquery_engine.node";
       };

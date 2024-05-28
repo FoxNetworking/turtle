@@ -20,15 +20,15 @@
         #
         # When updating Turtle, please update this to match
         # the version used within the upstream repo!
-        nodejsPackage = pkgs.nodejs_18;
+        nodejsPackage = pkgs.nodejs_20;
       in
       rec {
         # Simple shell to allow development.
         devShells.default = pkgs.mkShell {
           buildInputs = [
             nodejsPackage
-            pkgs.nodePackages.npm
-            pkgs.nodePackages.prisma
+            nodejsPackage.pkgs.npm
+            nodejsPackage.pkgs.prisma
           ];
         };
 

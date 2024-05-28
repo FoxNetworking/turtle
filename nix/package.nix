@@ -8,8 +8,7 @@ let
   #
   # See also: https://github.com/prisma/prisma/issues/3026#issuecomment-927258138
   prismaEnvironment = ''
-    # TODO: When Turtle is migrated to Prisma 5.x, rename to SCHEMA_ENGINE.
-    export PRISMA_MIGRATION_ENGINE_BINARY="${pkgs.prisma-engines}/bin/schema-engine"
+    export PRISMA_SCHEMA_ENGINE_BINARY="${pkgs.prisma-engines}/bin/schema-engine"
     export PRISMA_QUERY_ENGINE_BINARY="${pkgs.prisma-engines}/bin/query-engine"
     export PRISMA_QUERY_ENGINE_LIBRARY="${pkgs.prisma-engines}/lib/libquery_engine.node"
   '';
@@ -19,13 +18,8 @@ buildNpmPackage {
   version = "1.0.0";
 
   # We rely on Nix to manage our dependencies as specified.
-  npmDepsHash = "sha256-Hj/fwvdUxN7Ljb4BA7QqKZfF2AYaD9imVl8xi56Rmfc=";
+  npmDepsHash = "sha256-i8HEZDnHzbxB/1Y65UMVYeH5hBxnkz29sO65Bff5fr8=";
   src = ../.;
-
-  # Prisma needs to be fully pulled in.
-  buildInputs = [
-    pkgs.nodePackages.prisma
-  ];
 
   # We have to generate Prisma prior to building.
   preBuild = ''
