@@ -16,7 +16,7 @@
     (flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
-        # We're currently using Node.js 18.
+        # We're currently using Node.js 20.
         #
         # When updating Turtle, please update this to match
         # the version used within the upstream repo!

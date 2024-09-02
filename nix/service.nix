@@ -107,7 +107,7 @@ in
       preStart = ''
         export TURTLE_PATH="${self.packages.${pkgs.system}.turtle}";
         export MIGRATIONS_PATH="$TURTLE_PATH/lib/node_modules/bread/prisma/schema.prisma";
-        ${pkgs.nodePackages.prisma}/bin/prisma migrate deploy --schema=$MIGRATIONS_PATH
+        ${pkgs.prisma}/bin/prisma migrate deploy --schema=$MIGRATIONS_PATH
       '';
 
       wantedBy = [ "multi-user.target" ];
