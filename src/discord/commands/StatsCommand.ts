@@ -35,7 +35,7 @@ export class StatsCommand extends DiscordChatInputCommand {
 
   async handle(commandInteraction: ChatInputCommandInteraction): Promise<unknown> {
     const currentChannelId = getCurrentCommandInteractionChannelId(commandInteraction);
-    const outputLines = ['**🍞 Stats**', '```', 'Overall:'];
+    const outputLines = ['**🐢 Stats**', '```', 'Overall:'];
     // Global (everywhere)
     outputLines.push(`Global  : ${(await getGlobalCount()).toLocaleString('en-US')}`);
     if (commandInteraction.inGuild()) {

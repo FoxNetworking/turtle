@@ -14,12 +14,12 @@ export async function messageUpdateListener(oldMessage: Message | PartialMessage
     if (newMessage.author.bot) {
       return attemptMessageDelete(newMessage);
     }
-    // Delete if it is not the default bread emoji (if custom emojis aren't allowed)
-    if (!enabledChannel.allow_custom_emojis && newMessage.content !== '🍞') {
+    // Delete if it is not the default turtle emoji (if custom emojis aren't allowed)
+    if (!enabledChannel.allow_custom_emojis && newMessage.content !== '🐢') {
       return attemptMessageDelete(newMessage);
     }
-    // Delete if it is not the default bread emoji or custom emojis (if custom emojis are allowed)
-    if (enabledChannel.allow_custom_emojis && !inputEqualsValidEmoji(newMessage.content, ['🍞'])) {
+    // Delete if it is not the default turtle emoji or custom emojis (if custom emojis are allowed)
+    if (enabledChannel.allow_custom_emojis && !inputEqualsValidEmoji(newMessage.content, ['🐢'])) {
       return attemptMessageDelete(newMessage);
     }
   }
