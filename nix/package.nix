@@ -18,7 +18,7 @@ buildNpmPackage {
   version = "1.0.0";
 
   # We rely on Nix to manage our dependencies as specified.
-  npmDepsHash = "sha256-yH7gA0x9l6Qe9M6mEU023IjsGJlLEDeQPIvCYYzRc5E=";
+  npmDepsHash = "sha256-rUb4nxwwTvMMcJGoNhBzyLsZWteoV+i+go+RU8TzbdU=";
   src = ../.;
 
   # We have to generate Prisma prior to building.
