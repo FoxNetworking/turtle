@@ -4,6 +4,10 @@ let
   inherit (lib) mkEnableOption mkIf mkOption optionalString types;
   cfg = config.services.turtle;
 
+  # We're temporarily relying on Prisma v6.
+  prisma-engines = pkgs.prisma-engines_6;
+  prisma = pkgs.prisma_6;
+
   # Used for global emoji configuration.
   json = pkgs.formats.json { };
   globalEmojis = json.generate "globalEmojis.json" cfg.globalEmojis;
@@ -97,9 +101,9 @@ in
         # This.. is not ideal! It's mirrored to the Nix package within `./nix/package.nix`.
         #
         # See also: https://github.com/prisma/prisma/issues/3026#issuecomment-927258138
-        PRISMA_SCHEMA_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/schema-engine";
-        PRISMA_QUERY_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/query-engine";
-        PRISMA_QUERY_ENGINE_LIBRARY = "${pkgs.prisma-engines}/lib/libquery_engine.node";
+        PRISMA_SCHEMA_ENGINE_BINARY = "${prisma-engines}/bin/schema-engine";
+        PRISMA_QUERY_ENGINE_BINARY = "${prisma-engines}/bin/query-engine";
+        PRISMA_QUERY_ENGINE_LIBRARY = "${prisma-engines}/lib/libquery_engine.node";
       };
 
       # Migrate as soon as possible.
@@ -107,7 +111,7 @@ in
       preStart = ''
         export TURTLE_PATH="${self.packages.${pkgs.system}.turtle}";
         export MIGRATIONS_PATH="$TURTLE_PATH/lib/node_modules/bread/prisma/schema.prisma";
-        ${pkgs.prisma}/bin/prisma migrate deploy --schema=$MIGRATIONS_PATH
+        ${prisma}/bin/prisma migrate deploy --schema=$MIGRATIONS_PATH
       '';
 
       wantedBy = [ "multi-user.target" ];

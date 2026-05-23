@@ -16,19 +16,19 @@
     (flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
-        # We're currently using Node.js 22.
+        # We're currently using Node.js 24.
         #
         # When updating Turtle, please update this to match
         # the version used within the upstream repo!
-        nodejsPackage = pkgs.nodejs_22;
+        nodejsPackage = pkgs.nodejs_24;
       in
       rec {
         # Simple shell to allow development.
         devShells.default = pkgs.mkShell {
-          buildInputs = [
+          buildInputs = with pkgs; [
             nodejsPackage
-            nodejsPackage.pkgs.npm
-            nodejsPackage.pkgs.prisma
+            prisma
+            prisma-engines
           ];
         };
 
